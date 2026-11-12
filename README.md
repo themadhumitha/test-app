@@ -1,6 +1,6 @@
 # Quiz CLI
 
-An interactive command-line quiz game for learning JavaScript, Node.js, and general programming concepts. The application is written in JavaScript using Node.js ES modules and built-in APIs only.
+An interactive command-line quiz game for learning JavaScript, Node.js, and general programming concepts. The application code and its `package.json` are in the repository's `test-app/` directory. It is written in JavaScript using Node.js ES modules and built-in APIs only; the bundled question bank contains 15 questions across three categories.
 
 ## Features
 
@@ -10,12 +10,17 @@ An interactive command-line quiz game for learning JavaScript, Node.js, and gene
 - Receive immediate answer feedback and explanations, plus a final score and review of incorrect answers.
 - Replay without restarting the program.
 - Uses ANSI terminal colors without external dependencies.
+- Shows a progress bar, final score and performance message, and a review of incorrect answers with the selected and correct choices.
 
 ## Technologies
 
 - JavaScript (ECMAScript modules)
 - Node.js built-in modules: `node:fs/promises`, `node:path`, `node:url`, and `node:readline`
-- No third-party runtime dependencies are declared.
+- No third-party runtime dependencies are declared. The quiz uses Node.js built-ins (`node:fs/promises`, `node:path`, `node:url`, and `node:readline`) and local application modules.
+
+## Dependencies
+
+There are no third-party packages to install. `package.json` specifies Node.js `>=18.0.0`. npm is only needed if you want to use the package scripts (`npm start` and `npm test`); npm is distributed with Node.js.
 
 ## Prerequisites
 
@@ -54,14 +59,16 @@ Choose a category and question count using the numbered prompts. Enter the displ
 ```text
 test-app/
 ├── data/
-│   └── questions.json   # Categories, questions, options, answers, and explanations
+│   └── questions.json   # Three categories with questions, options, answers, and explanations
 ├── src/
 │   ├── colors.js        # ANSI terminal color helpers
 │   ├── input.js         # Readline prompts, option selection, and confirmation
-│   └── quiz.js          # Quiz state, question flow, scoring, and result display
-├── index.js             # Application entry point and main game loop
+│   └── quiz.js          # Shuffling, quiz state, scoring, progress, and results
+├── index.js             # Entry point, question loading, and main/replay loop
 └── package.json         # Package metadata, scripts, and Node.js requirement
 ```
+
+The repository root also contains this README. `__MACOSX` entries and `.DS_Store` files are archive/OS metadata, not application modules.
 
 ## Configuration and Question Data
 
