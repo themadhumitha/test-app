@@ -1,71 +1,86 @@
 # Quiz CLI
 
-An interactive command-line quiz game for learning JavaScript, Node.js, and general programming concepts. The application is written in JavaScript using Node.js ES modules and built-in APIs only.
+An interactive terminal quiz game for practicing JavaScript, Node.js, and general programming concepts. It runs with Node.js, reads its quiz content from a local JSON file, and uses Node.js built-in modules rather than third-party runtime packages.
 
-## Features
+## Key Features
 
-- Choose among JavaScript Basics, Node.js Fundamentals, and General Programming categories.
-- Run all questions in a category or choose 3 or 5 questions when available.
+- Choose from **JavaScript Basics**, **Node.js Fundamentals**, and **General Programming**. Each category currently contains five questions.
+- Play all questions in a category or select a three- or five-question quiz when that option is available.
+- Answer numbered multiple-choice prompts; invalid menu selections are rejected and prompted again.
 - Questions are shuffled for each quiz session.
-- Receive immediate answer feedback and explanations, plus a final score and review of incorrect answers.
-- Replay without restarting the program.
-- Uses ANSI terminal colors without external dependencies.
+- See immediate correctness feedback and explanations, followed by a final score, performance message, and review of incorrect answers.
+- Start another quiz from the replay prompt without restarting the program.
+- Display styled terminal output with ANSI escape codes; no color library is required.
 
 ## Technologies
 
-- JavaScript (ECMAScript modules)
+- **JavaScript** using ECMAScript modules
+- **Node.js 18 or later**
 - Node.js built-in modules: `node:fs/promises`, `node:path`, `node:url`, and `node:readline`
-- No third-party runtime dependencies are declared.
+- ANSI terminal escape codes for text styling
 
 ## Prerequisites
 
-- Node.js 18.0.0 or later
-- npm (distributed with Node.js) for the documented npm commands
+- Node.js **18.0.0 or later**
+- npm, included with standard Node.js installations, if using the npm commands below
 
 ## Installation and Setup
 
-1. Clone the repository and enter the application directory:
+1. Clone the repository and change to the application directory:
 
    ```bash
-   git clone <repository-url>
-   cd <repository-directory>/test-app
+   git clone https://github.com/themadhumitha/test-app.git
+   cd test-app/test-app
    ```
 
-2. No dependency installation is needed; `package.json` declares no external dependencies.
+2. No dependency installation is required. The package manifest declares no third-party dependencies.
 
-## Usage
+## How to Run
 
-Start the interactive quiz from the `test-app` directory:
+From the `test-app/` application directory, start the quiz with either command:
 
 ```bash
 npm start
 ```
 
-Alternatively, run its entry point directly:
+or:
 
 ```bash
 node index.js
 ```
 
-Choose a category and question count using the numbered prompts. Enter the displayed number for each answer, press Enter when prompted to continue, and answer `y` or `n` when asked whether to play again.
+Use the numbered prompts to choose a category, quiz length, and answer. Press Enter when prompted to continue between questions. At the end, respond `y` or `n` to the replay question.
+
+## Dependencies and Scripts
+
+There are **no third-party runtime dependencies** declared in `package.json`. The application uses Node.js built-ins and its local modules.
+
+| Command | Purpose |
+| --- | --- |
+| `npm start` | Runs `node index.js` to start the quiz. |
+| `npm test` | Runs Node.js's built-in test runner with `node --test`. |
+
+No project-specific test files are present in the inspected project structure, so `npm test` does not execute a project test suite.
 
 ## Project Structure
 
 ```text
-test-app/
+test-app/                         # Application directory
 ├── data/
-│   └── questions.json   # Categories, questions, options, answers, and explanations
+│   └── questions.json            # Quiz categories and question content
 ├── src/
-│   ├── colors.js        # ANSI terminal color helpers
-│   ├── input.js         # Readline prompts, option selection, and confirmation
-│   └── quiz.js          # Quiz state, question flow, scoring, and result display
-├── index.js             # Application entry point and main game loop
-└── package.json         # Package metadata, scripts, and Node.js requirement
+│   ├── colors.js                 # ANSI terminal color and style helpers
+│   ├── input.js                  # Readline prompts and input handling
+│   └── quiz.js                   # Quiz state, question flow, scoring, and results
+├── index.js                      # CLI entry point and main game loop
+└── package.json                  # Package metadata, scripts, and Node.js requirement
 ```
 
-## Configuration and Question Data
+At the repository root, `README.md` documents the project. The `__MACOSX/` entries and `.DS_Store` are operating-system metadata, not application source files.
 
-Quiz content is loaded from `data/questions.json` relative to `index.js`. The top-level `categories` object contains category entries. Each category has a display `name` and a `questions` array; each question uses this shape:
+## Question Data
+
+The application loads `data/questions.json` relative to `index.js`. Its top-level `categories` object contains category entries with a display `name` and a `questions` array. Each question uses the following shape:
 
 ```json
 {
@@ -76,28 +91,28 @@ Quiz content is loaded from `data/questions.json` relative to `index.js`. The to
 }
 ```
 
-`answer` is a zero-based index into `options`. The example describes the data structure; existing questions are in `data/questions.json`.
+`answer` is a **zero-based index** into `options`; the interactive prompts display choices using one-based numbering. The repository currently includes three categories with five questions each. This JSON file is the quiz content source; no separate configuration file is specified.
 
 ## Testing
 
-The package defines a test script using Node's built-in test runner:
+Run the package's test script from the application directory:
 
 ```bash
 npm test
 ```
 
-No test files are present in the repository structure, so this command currently runs the test runner without project-specific tests.
+The script invokes `node --test`. No project-specific test files were found in the inspected repository structure.
 
-## API Documentation
+## API
 
-This project is a local interactive CLI and does not expose an HTTP or other network API.
+This project is a local interactive command-line application. No HTTP or other network API is specified.
 
 ## Troubleshooting
 
-- **Node.js version error or unsupported syntax:** Verify that `node --version` reports `v18.0.0` or later.
-- **Questions fail to load:** Run the application from the repository's `test-app` directory and confirm `data/questions.json` exists and contains valid JSON.
-- **Unexpected answer selection:** Enter the option number shown in the prompt; selections are one-based in the CLI even though answers in the JSON data are zero-based.
+- **Node.js version or syntax errors:** Check `node --version`; the project requires Node.js 18.0.0 or later.
+- **Quiz data fails to load:** Run the command from the `test-app/` directory and verify that `data/questions.json` exists and contains valid JSON.
+- **An answer is not accepted:** Enter the one-based option number displayed in the prompt. The `answer` value stored in JSON is zero-based.
 
 ## License
 
-The package metadata declares the MIT license. A separate license file was not present in the inspected repository files; consult the repository owner for the applicable license text.
+`package.json` declares the **MIT** license. A separate license file was not present in the inspected repository structure.
