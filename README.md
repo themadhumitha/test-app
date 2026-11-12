@@ -2,7 +2,7 @@
 
 ## Description
 
-Quiz CLI is a local, interactive programming quiz application built with Node.js. It loads questions from a JSON file, lets you choose a quiz category and question count, and presents the quiz in the terminal. At the end, it shows your score and reviews incorrect answers with explanations. You can also choose to replay.
+Quiz CLI is a local, interactive programming quiz application built with Node.js. It loads questions from a JSON file, lets you choose a quiz category and question count, and presents the quiz in the terminal. After each answer, it shows whether the answer was correct and displays that question's explanation. At the end, it shows your score and reviews incorrect answers with your answer and the correct answer. You can also choose to replay.
 
 ## Features
 
@@ -10,7 +10,7 @@ Quiz CLI is a local, interactive programming quiz application built with Node.js
 - Select how many questions to answer.
 - Shuffle questions using a Fisher–Yates shuffle.
 - Track quiz progress and score.
-- Review incorrect answers and their explanations after the quiz.
+- Review incorrect answers, including your answer and the correct answer, after the quiz; explanations are shown immediately after each question.
 - Replay the quiz.
 - Use terminal prompts and ANSI colors without third-party packages.
 
@@ -42,7 +42,7 @@ repository/
         └── quiz.js           # Quiz flow, scoring, and answer review
 ```
 
-The application entry point is `test-app/index.js`. It loads `data/questions.json` relative to the module and coordinates the prompts, quiz, and replay flow. The quiz logic is in `src/quiz.js`; terminal input and colors are handled by `src/input.js` and `src/colors.js`.
+The application entry point is `test-app/index.js`. It loads `data/questions.json` relative to the module and coordinates category and question-count selection, the quiz, results, and replay. `src/quiz.js` owns question shuffling, answer tracking, scoring, progress display, and results. `src/input.js` wraps Node.js `readline` for numbered selections, confirmation, and pause prompts; `src/colors.js` supplies ANSI styling helpers. The app has no server component or external service integration.
 
 ## Prerequisites
 
@@ -90,7 +90,9 @@ Questions are stored in `data/questions.json`. The dataset contains five questio
 - Node.js Fundamentals
 - General Programming
 
-Each question includes question text, answer options, a zero-based index identifying the correct answer, and an explanation.
+Each category has a display `name` and a `questions` array. Each question record contains `question` text, an `options` array, an `answer` integer that is the zero-based index of the correct option, and an `explanation` string. For example, `"answer": 2` identifies the third option. Keep the answer index within the options array when editing or adding questions.
+
+The application offers all questions, or a 3- or 5-question quiz when the category has enough questions. Questions are shuffled after the selected set is taken from the category data.
 
 ## Testing
 
